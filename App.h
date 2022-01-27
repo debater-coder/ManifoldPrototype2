@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Gui.h"
+
 #include "IconsFontAwesome5.h"
 
 #include "imgui.h"
@@ -26,10 +28,9 @@ namespace Manifold
 			App();
 
 			int Init();
-			void Update(GLFWwindow* window, ImGuiIO io);
+			void Update(GLFWwindow* window, ImGuiIO io, Gui& gui);
 			ImGuiIO InitGUI(GLFWwindow* window);
 			void DrawFrame();
-			void DrawGUI();
 	};
 
 

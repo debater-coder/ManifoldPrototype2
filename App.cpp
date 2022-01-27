@@ -45,16 +45,17 @@ int Manifold::App::Init()
     glViewport(0, 0, window_width, window_height);
 
     ImGuiIO io = InitGUI(window);
+    Gui gui = Gui();
 
     while (glfwWindowShouldClose(window) == false) 
     {
-        Update(window, io);
+        Update(window, io, gui);
     }
     glfwTerminate();
     return 0;
 }
 
-void Manifold::App::Update(GLFWwindow* window, ImGuiIO io)
+void Manifold::App::Update(GLFWwindow* window, ImGuiIO io, Gui& gui)
 {
     // Background Fill Color
     glClearColor(0.082f, 0.086f, 0.09f, 1.0f);
@@ -67,7 +68,7 @@ void Manifold::App::Update(GLFWwindow* window, ImGuiIO io)
 
     DrawFrame();
 
-    DrawGUI();
+    gui.DrawGui();
     // Renders the ImGUI elements
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -109,11 +110,4 @@ ImGuiIO Manifold::App::InitGUI(GLFWwindow* window)
 void Manifold::App::DrawFrame()
 {
 
-}
-
-void Manifold::App::DrawGUI() {
-    ImGui::ShowDemoWindow();
-    ImGui::Begin("New window");
-    ImGui::Text(ICON_FA_PAINT_BRUSH" Paint");
-    ImGui::End();
 }
