@@ -20,13 +20,12 @@ namespace Manifold
 		public:
 			int window_width;
 			int window_height;
-			ImGuiIO* io;
 
 			App();
 
 			int Init();
-			void Update(GLFWwindow* window);
-			void InitGUI(GLFWwindow* window);
+			void Update(GLFWwindow* window, ImGuiIO io);
+			ImGuiIO InitGUI(GLFWwindow* window);
 			void DrawFrame();
 			void DrawGUI();
 	};

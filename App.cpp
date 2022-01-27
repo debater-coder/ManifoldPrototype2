@@ -1,12 +1,14 @@
 #include "App.h"
 
+namespace Manifold {
+    void framebuffer_size_callback(GLFWwindow* window, int width, int height)
+    {
+        glViewport(0, 0, width, height);
+    }
+}
+
 Manifold::App::App()
-{
-    // Initialize ImGUI IO
-    IMGUI_CHECKVERSION();
-    ImGui::CreateContext();
-    io = &ImGui::GetIO(); (void)io;
-    
+{   
     window_width = 1200;
     window_height = 800;
 }
@@ -37,20 +39,22 @@ int Manifold::App::Init()
     }
 
     fprintf(stderr, "OpenGL %s\n", glGetString(GL_VERSION));
+    
+    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
     glViewport(0, 0, window_width, window_height);
 
-    InitGUI(window);
+    ImGuiIO io = InitGUI(window);
 
     while (glfwWindowShouldClose(window) == false) 
     {
-        Update(window);
+        Update(window, io);
     }
     glfwTerminate();
     return 0;
 }
 
-void Manifold::App::Update(GLFWwindow* window)
+void Manifold::App::Update(GLFWwindow* window, ImGuiIO io)
 {
     // Background Fill Color
     glClearColor(0.082f, 0.086f, 0.09f, 1.0f);
@@ -62,8 +66,8 @@ void Manifold::App::Update(GLFWwindow* window)
     ImGui::NewFrame();
 
     DrawFrame();
-    DrawGUI();
 
+    DrawGUI();
     // Renders the ImGUI elements
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -73,11 +77,19 @@ void Manifold::App::Update(GLFWwindow* window)
     glfwPollEvents();
 }
 
-void Manifold::App::InitGUI(GLFWwindow* window)
+ImGuiIO Manifold::App::InitGUI(GLFWwindow* window)
 {
+    // Initialize ImGUI IO
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    ImGuiIO& io = ImGui::GetIO(); (void)io;
+    
+    io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+
     ImGui::StyleColorsDark();
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init("#version 330");
+    return io;
 }
 
 void Manifold::App::DrawFrame()
