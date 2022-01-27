@@ -1,5 +1,4 @@
 #pragma once
-
 #include "imgui.h"
 // Standard Headers
 #include <cstdio>
@@ -13,7 +12,6 @@ namespace Manifold {
 
 		Gui();
 		void DrawGui();
-		
 		
 	};
 }
