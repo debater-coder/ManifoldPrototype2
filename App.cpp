@@ -1,4 +1,4 @@
-#include "App.h"
+﻿#include "App.h"
 
 namespace Manifold {
     void framebuffer_size_callback(GLFWwindow* window, int width, int height)
@@ -89,6 +89,20 @@ ImGuiIO Manifold::App::InitGUI(GLFWwindow* window)
     ImGui::StyleColorsDark();
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init("#version 330");
+
+    io.Fonts->AddFontFromFileTTF("OpenSans-Regular.ttf", 16);
+    // merge in icons from Font Awesome
+    static const ImWchar icons_ranges[] = { ICON_MIN_FA, ICON_MAX_FA, 0 };
+    ImFontConfig icons_config; icons_config.MergeMode = true; icons_config.PixelSnapH = true;
+    io.Fonts->AddFontFromFileTTF(FONT_ICON_FILE_NAME_FAS, 16.0f, &icons_config, icons_ranges);
+
+    ImGui::GetStyle().WindowRounding = 4.0f;
+    ImGui::GetStyle().ChildRounding = 4.0f;
+    ImGui::GetStyle().FrameRounding = 4.0f;
+    ImGui::GetStyle().GrabRounding = 4.0f;
+    ImGui::GetStyle().PopupRounding = 4.0f;
+    ImGui::GetStyle().ScrollbarRounding = 4.0f;
+
     return io;
 }
 
@@ -98,11 +112,8 @@ void Manifold::App::DrawFrame()
 }
 
 void Manifold::App::DrawGUI() {
-    // ImGUI window creation
-    ImGui::Begin("My name is window, ImGUI window");
-    // Text that appears in the window
-    ImGui::Text("Hello there adventurer!");
-    // Ends the window
-    ImGui::End();
     ImGui::ShowDemoWindow();
+    ImGui::Begin("New window");
+    ImGui::Text(ICON_FA_PAINT_BRUSH" Paint");
+    ImGui::End();
 }

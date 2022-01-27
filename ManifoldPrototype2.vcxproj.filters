@@ -83,5 +83,16 @@
     <ClInclude Include="imgui\imstb_truetype.h">
       <Filter>Header Files\imgui</Filter>
     </ClInclude>
+    <ClInclude Include="IconsFontAwesome5.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="OpenSans-Regular.ttf">
+      <Filter>Resource Files</Filter>
+    </Font>
+    <Font Include="fa-solid-900.ttf">
+      <Filter>Resource Files</Filter>
+    </Font>
   </ItemGroup>
 </Project>
