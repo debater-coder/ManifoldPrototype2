@@ -1,5 +1,9 @@
 #pragma once
 
+#include "imgui.h"
+#include "imgui_impl_glfw.h"
+#include "imgui_impl_opengl3.h"
+
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
@@ -13,13 +17,18 @@ namespace Manifold
 {
 	class App
 	{
-		int window_width = 1200;
-		int window_height = 800;
-	public:
-		App();
+		public:
+			int window_width;
+			int window_height;
+			ImGuiIO* io;
 
-		int Init();
-		void Update();
+			App();
+
+			int Init();
+			void Update(GLFWwindow* window);
+			void InitGUI(GLFWwindow* window);
+			void DrawFrame();
+			void DrawGUI();
 	};
 
 

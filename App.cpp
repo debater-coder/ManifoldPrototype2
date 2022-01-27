@@ -2,6 +2,13 @@
 
 Manifold::App::App()
 {
+    // Initialize ImGUI IO
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    io = &ImGui::GetIO(); (void)io;
+    
+    window_width = 1200;
+    window_height = 800;
 }
 
 int Manifold::App::Init()
@@ -33,23 +40,57 @@ int Manifold::App::Init()
 
     glViewport(0, 0, window_width, window_height);
 
+    InitGUI(window);
+
     while (glfwWindowShouldClose(window) == false) 
     {
-        // Background Fill Color
-        glClearColor(0.082, 0.086, 0.09, 1.0);
-        glClear(GL_COLOR_BUFFER_BIT);
-
-        Update();
-
-        // Flip Buffers and Draw
-        glfwSwapBuffers(window);
-        glfwPollEvents();
+        Update(window);
     }
     glfwTerminate();
     return 0;
 }
 
-void Manifold::App::Update()
+void Manifold::App::Update(GLFWwindow* window)
+{
+    // Background Fill Color
+    glClearColor(0.082f, 0.086f, 0.09f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    // Tell OpenGL a new frame is about to begin
+    ImGui_ImplOpenGL3_NewFrame();
+    ImGui_ImplGlfw_NewFrame();
+    ImGui::NewFrame();
+
+    DrawFrame();
+    DrawGUI();
+
+    // Renders the ImGUI elements
+    ImGui::Render();
+    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+    // Flip Buffers and Draw
+    glfwSwapBuffers(window);
+    glfwPollEvents();
+}
+
+void Manifold::App::InitGUI(GLFWwindow* window)
+{
+    ImGui::StyleColorsDark();
+    ImGui_ImplGlfw_InitForOpenGL(window, true);
+    ImGui_ImplOpenGL3_Init("#version 330");
+}
+
+void Manifold::App::DrawFrame()
 {
 
+}
+
+void Manifold::App::DrawGUI() {
+    // ImGUI window creation
+    ImGui::Begin("My name is window, ImGUI window");
+    // Text that appears in the window
+    ImGui::Text("Hello there adventurer!");
+    // Ends the window
+    ImGui::End();
+    ImGui::ShowDemoWindow();
 }
