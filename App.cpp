@@ -72,7 +72,7 @@ void Manifold::App::Update(GLFWwindow* window, ImGuiIO io, Gui& gui)
 
     DrawFrame();
 
-    gui.DrawGui();
+    gui.DrawGui(io);
     // Renders the ImGUI elements
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -100,6 +100,15 @@ ImGuiIO Manifold::App::InitGUI(GLFWwindow* window)
     static const ImWchar icons_ranges[] = { ICON_MIN_FA, ICON_MAX_FA, 0 };
     ImFontConfig icons_config; icons_config.MergeMode = true; icons_config.PixelSnapH = true;
     io.Fonts->AddFontFromFileTTF(FONT_ICON_FILE_NAME_FAS, 16.0f, &icons_config, icons_ranges);
+    
+    ImVector<ImWchar> ranges;
+    ImFontGlyphRangesBuilder builder;
+    builder.AddText("∀(x, y ∈ A ∪ B; x ≠ y) x² − y² ≥ 0");                        // Add a string (here "Hello world" contains 7 unique characters)
+    builder.AddRanges(io.Fonts->GetGlyphRangesDefault()); // Add one of the default ranges
+    builder.BuildRanges(&ranges);                          // Build the final result (ordered ranges with all the unique characters submitted)
+
+    ImFont* mathFont = io.Fonts->AddFontFromFileTTF("NotoSansMath-Regular.ttf", 16, NULL, ranges.Data);
+    io.Fonts->Build();
 
     ImGui::GetStyle().WindowRounding = 4.0f;
     ImGui::GetStyle().ChildRounding = 4.0f;

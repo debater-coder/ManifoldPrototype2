@@ -100,5 +100,8 @@
     <Font Include="fa-solid-900.ttf">
       <Filter>Resource Files</Filter>
     </Font>
+    <Font Include="NotoSansMath-Regular.ttf">
+      <Filter>Resource Files</Filter>
+    </Font>
   </ItemGroup>
 </Project>
